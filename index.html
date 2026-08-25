@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>COOPRECOZ – Cooperativa de Educandos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ══ VARIABLES ══════════════════════════════════════════ */
+    :root {
+      --verde:       #3a7d44;
+      --verde-claro: #6ab04c;
+      --tierra:      #c8814a;
+      --crema:       #fdf6e3;
+      --marron:      #5c3d1e;
+      --amarillo:    #f0c040;
+      --blanco:      #ffffff;
+      --gris:        #f4f0e8;
+      --sombra:      0 4px 24px rgba(60,80,30,.13);
+      --sombra-lg:   0 12px 40px rgba(60,80,30,.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--crema); color: var(--marron); overflow-x: hidden; }
+    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
+
+    /* ══ HEADER ═════════════════════════════════════════════ */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--verde);
+      box-shadow: 0 2px 12px rgba(0,0,0,.18);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 84px;
+    }
+    .logo-header { display: flex; align-items: center; gap: .7rem; text-decoration: none; }
+    .logo-icon { width: 60px; height: 60px; background: var(--amarillo); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,.2); flex-shrink: 0; overflow: hidden; }
+    .logo-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .footer-logo .logo-icon { width: 84px; height: 84px; }
+    .logo-texto strong { font-family: 'Playfair Display', serif; font-size: 1.3rem; letter-spacing: 1px; display: block; line-height: 1; color: var(--blanco); }
+    .logo-texto span { font-size: .7rem; opacity: .85; letter-spacing: .5px; color: var(--blanco); }
+    nav { display: flex; gap: .2rem; }
+    nav a { color: var(--blanco); text-decoration: none; font-weight: 700; font-size: .85rem; padding: .45rem .8rem; border-radius: 20px; transition: background .2s, color .2s; }
+    nav a:hover, nav a.activo { background: var(--amarillo); color: var(--marron); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 26px; height: 3px; background: var(--blanco); border-radius: 2px; }
+
+    /* ══ HERO ════════════════════════════════════════════════ */
+    #inicio {
+      min-height: 90vh;
+      background: radial-gradient(ellipse at 70% 40%, rgba(106,176,76,.18) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 80%, rgba(200,129,74,.12) 0%, transparent 50%),
+                  linear-gradient(160deg, #e8f5e1 0%, #fdf6e3 55%, #fef3d0 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 2rem; position: relative; overflow: hidden;
+    }
+    .hojas-deco { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .hoja { position: absolute; font-size: 3rem; opacity: .09; animation: flotar 8s ease-in-out infinite; }
+    .hoja:nth-child(1) { top:10%; left:5%; animation-delay:0s; }
+    .hoja:nth-child(2) { top:60%; left:2%; animation-delay:2s; font-size:2rem; }
+    .hoja:nth-child(3) { top:20%; right:6%; animation-delay:1s; }
+    .hoja:nth-child(4) { top:75%; right:4%; animation-delay:3s; font-size:2.5rem; }
+    .hoja:nth-child(5) { top:45%; left:50%; animation-delay:1.5s; font-size:4rem; }
+    @keyframes flotar { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-18px) rotate(6deg)} }
+    .hero-contenido { text-align: center; max-width: 700px; z-index: 1; }
+    .badge-hero { display: inline-block; background: var(--verde); color: var(--blanco); font-size: .78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: .35rem 1.1rem; border-radius: 20px; margin-bottom: 1.2rem; }
+    .hero-titulo { font-size: clamp(2.8rem,7vw,5rem); color: var(--verde); line-height: 1.05; margin-bottom: .5rem; }
+    .hero-titulo em { color: var(--tierra); font-style: normal; }
+    .hero-subtitulo { font-size: 1.1rem; color: var(--marron); opacity: .8; max-width: 520px; margin: .8rem auto 2rem; line-height: 1.6; }
+    .btn-cta { display: inline-block; background: var(--verde); color: var(--blanco); padding: .85rem 2.2rem; border-radius: 30px; font-weight: 700; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 16px rgba(58,125,68,.35); transition: transform .2s, box-shadow .2s, background .2s; margin: .4rem; }
+    .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(58,125,68,.4); background: var(--verde-claro); }
+    .btn-cta.sec { background: var(--tierra); box-shadow: 0 4px 16px rgba(200,129,74,.3); }
+    .btn-cta.sec:hover { background: #d9925a; }
+
+    /* ══ SECCIONES GENERALES ════════════════════════════════ */
+    section { padding: 5rem 2rem; }
+    .seccion-titulo { text-align: center; font-size: clamp(1.8rem,4vw,2.6rem); color: var(--verde); margin-bottom: .5rem; }
+    .seccion-linea { width: 60px; height: 4px; background: var(--tierra); border-radius: 2px; margin: .5rem auto 2.5rem; }
+
+    /* ══ QUIÉNES SOMOS ══════════════════════════════════════ */
+    #quienes { background: var(--blanco); }
+    .quienes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1000px; margin: 0 auto; align-items: center; }
+    .quienes-texto p { line-height: 1.8; margin-bottom: 1rem; font-size: 1rem; }
+    .quienes-texto strong { color: var(--verde); }
+    .valores-lista { list-style: none; display: flex; flex-direction: column; gap: .9rem; }
+    .valores-lista li { display: flex; align-items: flex-start; gap: .8rem; background: var(--gris); padding: .9rem 1.2rem; border-radius: 12px; font-weight: 600; font-size: .92rem; border-left: 4px solid var(--verde-claro); transition: transform .2s; }
+    .valores-lista li:hover { transform: translateX(4px); }
+
+    /* ══ SERVICIOS ══════════════════════════════════════════ */
+    #servicios { background: var(--gris); }
+    .servicios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 1.6rem; max-width: 1100px; margin: 0 auto; }
+    .tarjeta { background: var(--blanco); border-radius: 18px; padding: 1.8rem 1.4rem; box-shadow: var(--sombra); transition: transform .25s, box-shadow .25s; position: relative; overflow: hidden; }
+    .tarjeta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--verde), var(--verde-claro)); border-radius: 18px 18px 0 0; }
+    .tarjeta.dest::before { background: linear-gradient(90deg, var(--tierra), var(--amarillo)); }
+    .tarjeta:hover { transform: translateY(-6px); box-shadow: var(--sombra-lg); }
+    .tarjeta .ico { font-size: 2.4rem; margin-bottom: .7rem; }
+    .tarjeta h3 { font-size: 1.2rem; color: var(--verde); margin-bottom: .5rem; }
+    .tarjeta.dest h3 { color: var(--tierra); }
+    .tarjeta p { font-size: .9rem; line-height: 1.65; opacity: .85; }
+    .badge-nuevo { display: inline-block; background: var(--tierra); color: var(--blanco); font-size: .68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: .2rem .7rem; border-radius: 10px; margin-bottom: .5rem; }
+
+    /* ══ HUMUS ════════════════════════════════════════════ */
+    #humus { background: linear-gradient(135deg, #2d5a1b 0%, #3a7d44 50%, #4a9c55 100%); color: var(--blanco); position: relative; overflow: hidden; }
+    #humus .seccion-titulo { color: var(--amarillo); }
+    #humus .seccion-linea { background: var(--amarillo); }
+    .humus-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 1; }
+    .humus-info h3 { font-size: 1.4rem; color: var(--amarillo); margin-bottom: .9rem; }
+    .humus-info p { line-height: 1.8; opacity: .92; margin-bottom: .9rem; font-size: .98rem; }
+    .bene-lista { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+    .bene-lista li { display: flex; align-items: center; gap: .7rem; background: rgba(255,255,255,.1); padding: .65rem 1rem; border-radius: 10px; font-weight: 600; font-size: .88rem; }
+    .precio-card { background: var(--blanco); color: var(--marron); border-radius: 20px; padding: 2rem; box-shadow: 0 8px 40px rgba(0,0,0,.25); text-align: center; }
+    .precio-card h3 { color: var(--verde); font-size: 1.35rem; margin-bottom: .4rem; }
+    .precio-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--verde); font-weight: 900; line-height: 1; margin: .8rem 0 .2rem; }
+    .precio-nota { font-size: .78rem; opacity: .7; margin-bottom: 1.2rem; }
+    .btn-pedir { display: block; background: var(--verde); color: var(--blanco); padding: .8rem; border-radius: 25px; font-weight: 700; text-decoration: none; transition: background .2s; font-size: .95rem; }
+    .btn-pedir:hover { background: var(--verde-claro); }
+    .stock-badge { display: inline-flex; align-items: center; gap: .4rem; background: #e8f5e1; color: var(--verde); font-size: .75rem; font-weight: 700; padding: .3rem .8rem; border-radius: 20px; margin-top: .8rem; }
+    .dot-verde { width: 8px; height: 8px; background: var(--verde-claro); border-radius: 50%; animation: pulso 1.5s infinite; }
+    @keyframes pulso { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+
+    /* ══ ★ SECCIÓN ASOCIADOS — PANEL PRINCIPAL ★ ══════════ */
+    #asociados { background: var(--blanco); }
+
+    /* Sub-tabs dentro de la sección asociados */
+    .asoc-tabs { display: flex; gap: .5rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .asoc-tab { padding: .6rem 1.4rem; border-radius: 25px; font-weight: 700; font-size: .88rem; cursor: pointer; border: 2px solid var(--verde); color: var(--verde); background: transparent; transition: background .2s, color .2s; }
+    .asoc-tab.on { background: var(--verde); color: var(--blanco); }
+
+    /* Panel: Cómo unirse */
+    #tab-unirse { max-width: 900px; margin: 0 auto; }
+    .pasos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1.4rem; }
+    .paso { background: var(--gris); border-radius: 16px; padding: 1.6rem 1.2rem; text-align: center; transition: transform .2s, box-shadow .2s; }
+    .paso:hover { transform: translateY(-4px); box-shadow: var(--sombra); }
+    .paso-num { width: 44px; height: 44px; background: var(--verde); color: var(--blanco); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900; margin: 0 auto 1rem; }
+    .paso h3 { font-size: 1rem; color: var(--verde); margin-bottom: .4rem; }
+    .paso p { font-size: .85rem; line-height: 1.6; opacity: .8; }
+    .bene-asoc { max-width: 800px; margin: 2rem auto 0; background: var(--gris); border-radius: 18px; padding: 1.8rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; }
+    .ba { display: flex; align-items: flex-start; gap: .6rem; font-size: .9rem; }
+    .ba .bi { font-size: 1.4rem; flex-shrink: 0; }
+
+    /* Panel: Buscar asociado */
+    #tab-buscar { max-width: 900px; margin: 0 auto; }
+
+    /* Caja de configuración (instrucciones) */
+    .config-box {
+      background: linear-gradient(135deg, #e8f5e1, #fdf6e3);
+      border: 2px dashed var(--verde-claro);
+      border-radius: 16px;
+      padding: 1.8rem 2rem;
+      margin-bottom: 2rem;
+    }
+    .config-box h4 { color: var(--verde); margin-bottom: .8rem; font-size: 1.1rem; display: flex; align-items: center; gap: .5rem; }
+    .config-box p { font-size: .9rem; line-height: 1.7; margin-bottom: .8rem; }
+    .config-box code { background: rgba(58,125,68,.12); color: var(--verde); padding: .15rem .45rem; border-radius: 4px; font-size: .82rem; font-family: 'Courier New', monospace; word-break: break-all; }
+    .config-box ol { padding-left: 1.3rem; }
+    .config-box ol li { font-size: .9rem; line-height: 1.8; margin-bottom: .3rem; }
+    .config-input { display: flex; gap: .8rem; margin-top: 1rem; flex-wrap: wrap; align-items: flex-end; }
+    .config-input input { flex: 1; min-width: 260px; padding: .75rem 1rem; border: 2px solid var(--verde-claro); border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: .88rem; background: var(--blanco); color: var(--marron); outline: none; }
+    .config-input input:focus { border-color: var(--verde); }
+    .btn-conectar { background: var(--verde); color: var(--blanco); border: none; padding: .75rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: .9rem; cursor: pointer; transition: background .2s; white-space: nowrap; }
+    .btn-conectar:hover { background: var(--verde-claro); }
+
+    /* Barra de búsqueda */
+    .buscador-wrap { position: relative; margin-bottom: 1.5rem; }
+    .buscador-wrap input {
+      width: 100%; padding: 1rem 1.2rem 1rem 3rem;
+      border: 2px solid #d4e8c2; border-radius: 14px;
+      font-family: 'Nunito', sans-serif; font-size: 1rem;
+      background: var(--blanco); color: var(--marron); outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .buscador-wrap input:focus { border-color: var(--verde); box-shadow: 0 0 0 3px rgba(58,125,68,.1); }
+    .buscador-ico { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1.2rem; pointer-events: none; }
+    .buscador-clear { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 1.2rem; cursor: pointer; opacity: .5; display: none; }
+
+    /* Stats bar */
+    .stats-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .stat-chip { background: var(--gris); padding: .5rem 1rem; border-radius: 20px; font-size: .82rem; font-weight: 700; display: flex; align-items: center; gap: .4rem; }
+    .stat-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot-verde2 { background: var(--verde-claro); }
+    .dot-gris { background: #aaa; }
+
+    /* Grid de tarjetas de asociados */
+    .asociados-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+    .aso-card {
+      background: var(--blanco); border-radius: 14px; padding: 1.2rem 1.4rem;
+      box-shadow: var(--sombra); border-left: 4px solid var(--verde-claro);
+      cursor: pointer; transition: transform .2s, box-shadow .2s, border-color .2s;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .aso-card:hover { transform: translateY(-3px); box-shadow: var(--sombra-lg); border-color: var(--verde); }
+    .aso-avatar {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--verde-claro), var(--verde));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1.2rem;
+      color: var(--blanco); font-weight: 900;
+    }
+    .aso-info h4 { font-size: .95rem; color: var(--marron); margin-bottom: .2rem; }
+    .aso-info p { font-size: .78rem; opacity: .7; }
+    .aso-badge { font-size: .68rem; background: #e8f5e1; color: var(--verde); padding: .15rem .5rem; border-radius: 8px; font-weight: 700; }
+    .aso-badge-ok { background: #e8f5e1; color: var(--verde); }
+    .aso-badge-no { background: #fce8e8; color: #c0392b; }
+
+    /* Estado vacío / cargando */
+    .estado-msg { text-align: center; padding: 3rem 1rem; }
+    .estado-msg .ico-grande { font-size: 3.5rem; margin-bottom: 1rem; opacity: .5; }
+    .estado-msg p { opacity: .6; font-size: .95rem; }
+
+    /* ── MODAL FICHA DEL ASOCIADO ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(30,50,20,.6); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-card {
+      background: var(--blanco); border-radius: 24px; max-width: 480px; width: 100%;
+      box-shadow: 0 24px 60px rgba(0,0,0,.3); overflow: hidden;
+      animation: popIn .25s ease;
+    }
+    @keyframes popIn { from{transform:scale(.92);opacity:0} to{transform:scale(1);opacity:1} }
+    .modal-header {
+      background: linear-gradient(135deg, var(--verde), var(--verde-claro));
+      padding: 2rem; text-align: center; color: var(--blanco); position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,.2);
+      border: none; color: var(--blanco); font-size: 1.3rem; width: 32px; height: 32px;
+      border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,.35); }
+    .modal-avatar-grande {
+      width: 72px; height: 72px; border-radius: 50%; border: 3px solid rgba(255,255,255,.5);
+      background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--blanco);
+      font-weight: 900; margin: 0 auto 1rem;
+    }
+    .modal-header h3 { font-size: 1.3rem; margin-bottom: .2rem; }
+    .modal-header p { font-size: .85rem; opacity: .85; }
+    .modal-body { padding: 1.8rem; }
+    .modal-fila {
+      display: flex; align-items: center; gap: 1rem; padding: .75rem 0;
+      border-bottom: 1px solid rgba(92,61,30,.07);
+    }
+    .modal-fila:last-child { border-bottom: none; }
+    .modal-fila-ico { font-size: 1.3rem; flex-shrink: 0; width: 28px; text-align: center; }
+    .modal-fila-label { font-size: .72rem; text-transform: uppercase; letter-spacing: 1px; opacity: .5; font-weight: 700; }
+    .modal-fila-valor { font-size: .95rem; font-weight: 600; margin-top: .1rem; }
+    .modal-footer { padding: 1rem 1.8rem 1.8rem; display: flex; gap: .8rem; flex-wrap: wrap; }
+    .btn-modal { flex: 1; text-align: center; padding: .7rem; border-radius: 12px; font-weight: 700; font-size: .88rem; text-decoration: none; border: none; cursor: pointer; transition: background .2s; }
+    .btn-modal.pri { background: var(--verde); color: var(--blanco); }
+    .btn-modal.pri:hover { background: var(--verde-claro); }
+    .btn-modal.sec2 { background: var(--gris); color: var(--marron); }
+
+    /* ══ ESTRUCTURA ════════════════════════════════════════ */
+    #estructura { background: var(--gris); }
+    .org-chart { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .org-nivel { display: flex; justify-content: center; gap: 2rem; width: 100%; }
+    .org-linea-v { width: 3px; height: 40px; background: var(--verde-claro); border-radius: 2px; }
+    .org-tarjeta { background: var(--blanco); border-radius: 16px; padding: 1.4rem 1.6rem; text-align: center; box-shadow: var(--sombra); min-width: 175px; transition: transform .2s, box-shadow .2s; border-top: 4px solid var(--verde); }
+    .org-tarjeta:hover { transform: translateY(-4px); box-shadow: var(--sombra-lg); }
+    .org-tarjeta.pres { border-top-color: var(--amarillo); min-width: 220px; }
+    .org-tarjeta.tes  { border-top-color: var(--tierra); }
+    .org-tarjeta.com  { border-top-color: var(--verde-claro); }
+    .cargo-ico { font-size: 2rem; margin-bottom: .4rem; }
+    .org-tarjeta h3 { font-size: 1rem; color: var(--verde); margin-bottom: .25rem; }
+    .org-tarjeta.pres h3 { color: var(--marron); font-size: 1.1rem; }
+    .org-tarjeta p { font-size: .8rem; opacity: .75; line-height: 1.5; }
+    .nivel-hijos { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+    .linea-h-wrap { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 460px; }
+    .linea-h { height: 3px; background: var(--verde-claro); flex: 1; }
+
+    /* ══ FOOTER ═════════════════════════════════════════════ */
+    footer { background: var(--marron); color: rgba(255,255,255,.85); padding: 3rem 2rem; }
+    .footer-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; }
+    .footer-logo { display: flex; align-items: center; gap: .8rem; margin-bottom: .8rem; }
+    .footer-logo strong { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--blanco); }
+    footer p { font-size: .88rem; line-height: 1.7; opacity: .8; }
+    footer h4 { font-family: 'Playfair Display', serif; color: var(--amarillo); margin-bottom: .8rem; font-size: 1rem; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: .5rem; }
+    footer ul li a { color: rgba(255,255,255,.75); text-decoration: none; font-size: .88rem; transition: color .2s; }
+    footer ul li a:hover { color: var(--amarillo); }
+    .footer-bottom { max-width: 1000px; margin: 2rem auto 0; border-top: 1px solid rgba(255,255,255,.15); padding-top: 1.5rem; text-align: center; font-size: .8rem; opacity: .65; }
+
+    /* ══ CALCULADORA ════════════════════════════════════════ */
+    #calculadora { background: linear-gradient(160deg, #fef3d0 0%, #fdf6e3 60%, #e8f5e1 100%); }
+
+    .calc-layout {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem; align-items: start;
+    }
+
+    /* Tarjeta genérica de calculadora */
+    .calc-card {
+      background: var(--blanco); border-radius: 22px;
+      box-shadow: var(--sombra-lg); overflow: hidden;
+    }
+    .calc-card-header {
+      padding: 1.2rem 1.6rem;
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .calc-card-header .ch-ico { font-size: 1.8rem; }
+    .calc-card-header h3 { font-size: 1.1rem; }
+    .calc-card-header p  { font-size: .78rem; opacity: .7; margin-top: .1rem; }
+    .calc-card-body { padding: 1.4rem 1.6rem; }
+
+    /* Pantalla de resultado */
+    .calc-pantalla {
+      background: #1a2e1a; border-radius: 14px;
+      padding: 1rem 1.4rem; margin-bottom: 1.2rem;
+      min-height: 80px; display: flex; flex-direction: column;
+      justify-content: flex-end; align-items: flex-end;
+    }
+    .calc-pantalla .expresion {
+      font-size: .8rem; color: rgba(255,255,255,.45);
+      font-family: 'Courier New', monospace;
+      min-height: 1.2rem; text-align: right; word-break: break-all;
+    }
+    .calc-pantalla .resultado {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; color: #a8e67a;
+      font-weight: 900; line-height: 1.1; word-break: break-all;
+    }
+
+    /* Grid de botones */
+    .calc-botones {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: .5rem;
+    }
+    .cb {
+      padding: .9rem .5rem; border: none; border-radius: 12px;
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 1rem; cursor: pointer;
+      transition: transform .1s, box-shadow .1s, background .15s;
+      touch-action: manipulation;
+    }
+    .cb:active { transform: scale(.93); }
+    .cb.num  { background: var(--gris); color: var(--marron); }
+    .cb.num:hover  { background: #e8e0d0; }
+    .cb.op   { background: #d4e8c2; color: var(--verde); }
+    .cb.op:hover   { background: #c2dba8; }
+    .cb.igual { background: var(--verde); color: var(--blanco); font-size: 1.2rem; }
+    .cb.igual:hover { background: var(--verde-claro); }
+    .cb.clear { background: #fce8e8; color: #c0392b; }
+    .cb.clear:hover { background: #f5c6c6; }
+    .cb.borrar { background: #fef3d0; color: var(--tierra); }
+    .cb.span2 { grid-column: span 2; }
+    .cb.span3 { grid-column: span 3; }
+
+    /* Sección de vueltos */
+    .vueltos-card { background: var(--blanco); border-radius: 22px; box-shadow: var(--sombra-lg); overflow: hidden; }
+    .vueltos-header {
+      background: linear-gradient(135deg, var(--verde), var(--verde-claro));
+      padding: 1.2rem 1.6rem; color: var(--blanco);
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .vueltos-header .vh-ico { font-size: 1.8rem; }
+    .vueltos-header h3 { font-size: 1.1rem; }
+    .vueltos-header p  { font-size: .78rem; opacity: .85; margin-top: .1rem; }
+    .vueltos-body { padding: 1.4rem 1.6rem; }
+
+    .campo-grupo { margin-bottom: 1rem; }
+    .campo-grupo label {
+      display: block; font-size: .78rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .8px;
+      opacity: .6; margin-bottom: .4rem;
+    }
+    .campo-input-wrap { position: relative; }
+    .campo-prefix {
+      position: absolute; left: .9rem; top: 50%; transform: translateY(-50%);
+      font-weight: 800; font-size: .9rem; color: var(--verde); pointer-events: none;
+    }
+    .campo-input {
+      width: 100%; padding: .75rem .9rem .75rem 2rem;
+      border: 2px solid #d4e8c2; border-radius: 12px;
+      font-family: 'Nunito', sans-serif; font-size: 1rem;
+      font-weight: 700; color: var(--marron); outline: none;
+      transition: border-color .2s; background: var(--blanco);
+    }
+    .campo-input:focus { border-color: var(--verde); }
+    .campo-input.error { border-color: #e74c3c; background: #fce8e8; }
+
+    .btn-calcular-vueltos {
+      width: 100%; padding: .9rem; background: var(--verde);
+      color: var(--blanco); border: none; border-radius: 14px;
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 1rem; cursor: pointer;
+      transition: background .2s, transform .1s;
+      margin-top: .5rem;
+    }
+    .btn-calcular-vueltos:hover { background: var(--verde-claro); }
+    .btn-calcular-vueltos:active { transform: scale(.97); }
+
+    /* Resultado de vueltos */
+    .vueltos-resultado {
+      margin-top: 1.2rem; border-radius: 16px; overflow: hidden;
+      display: none;
+    }
+    .vueltos-resultado.show { display: block; animation: popIn .3s ease; }
+    .vr-ok   { background: linear-gradient(135deg, #e8f5e1, #d4edbc); }
+    .vr-error { background: linear-gradient(135deg, #fce8e8, #f9d0d0); }
+    .vr-exacto { background: linear-gradient(135deg, #e8f0fb, #cfdff7); }
+    .vueltos-resultado .vr-top {
+      padding: 1rem 1.2rem; display: flex; align-items: center; gap: .8rem;
+    }
+    .vr-top .vr-ico { font-size: 2rem; }
+    .vr-top .vr-titulo { font-size: .78rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; opacity: .65; }
+    .vr-top .vr-monto {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 900; line-height: 1;
+    }
+    .vr-top .vr-monto.verde { color: var(--verde); }
+    .vr-top .vr-monto.rojo  { color: #c0392b; }
+    .vr-top .vr-monto.azul  { color: #2471a3; }
+    .vr-desglose {
+      background: rgba(255,255,255,.6); padding: .8rem 1.2rem;
+      font-size: .82rem; line-height: 1.7;
+    }
+    .vr-desglose .vr-fila { display: flex; justify-content: space-between; align-items: center; }
+    .vr-desglose .vr-fila.total { font-weight: 800; border-top: 1px dashed rgba(0,0,0,.12); margin-top: .4rem; padding-top: .4rem; }
+    .monedas-wrap { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
+    .moneda-chip {
+      background: rgba(255,255,255,.8); border: 2px solid rgba(58,125,68,.2);
+      border-radius: 20px; padding: .3rem .8rem;
+      font-size: .82rem; font-weight: 700; color: var(--verde);
+      display: flex; align-items: center; gap: .3rem;
+    }
+
+    /* Productos rápidos */
+    .productos-rapidos { margin-bottom: 1.2rem; }
+    .productos-rapidos p { font-size: .8rem; font-weight: 800; opacity: .6; text-transform: uppercase; letter-spacing: .8px; margin-bottom: .6rem; }
+    .prod-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .prod-chip {
+      background: var(--gris); border: 2px solid transparent;
+      border-radius: 20px; padding: .4rem .9rem;
+      font-size: .82rem; font-weight: 700; cursor: pointer;
+      transition: background .15s, border-color .15s, transform .1s;
+      font-family: 'Nunito', sans-serif; color: var(--marron);
+    }
+    .prod-chip:hover { background: #e0edcc; border-color: var(--verde2); transform: translateY(-1px); }
+    .prod-chip.sel { background: var(--verde); color: var(--blanco); border-color: var(--verde); }
+
+    /* Historial de ventas */
+    .historial-seccion { margin-top: 1.5rem; }
+    .historial-titulo {
+      font-size: .8rem; font-weight: 800; opacity: .6;
+      text-transform: uppercase; letter-spacing: .8px;
+      margin-bottom: .6rem; display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .btn-limpiar-hist {
+      background: none; border: none; font-size: .75rem;
+      color: var(--tierra); cursor: pointer; font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+    }
+    .historial-lista { display: flex; flex-direction: column; gap: .5rem; max-height: 200px; overflow-y: auto; }
+    .hist-item {
+      background: var(--gris); border-radius: 10px;
+      padding: .6rem .9rem; display: flex;
+      justify-content: space-between; align-items: center;
+      font-size: .82rem;
+      animation: slideIn .25s ease;
+    }
+    @keyframes slideIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:translateX(0)} }
+    .hist-item .hi-izq { font-weight: 700; }
+    .hist-item .hi-der { text-align: right; }
+    .hist-item .hi-vuelto { font-size: .75rem; color: var(--verde); font-weight: 700; }
+    .hist-item .hi-hora   { font-size: .7rem; opacity: .5; }
+    .hist-vacio { font-size: .82rem; opacity: .5; text-align: center; padding: 1rem; }
+
+    /* Totales del día */
+    .totales-dia {
+      background: linear-gradient(135deg, var(--verde), var(--verde-claro));
+      border-radius: 16px; padding: 1.2rem 1.4rem; color: var(--blanco);
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem;
+      text-align: center; margin-top: 1.5rem;
+    }
+    .td-item .td-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 900; line-height: 1;
+    }
+    .td-item .td-label { font-size: .72rem; opacity: .85; margin-top: .3rem; }
+
+    @keyframes popIn { from{transform:scale(.94);opacity:0} to{transform:scale(1);opacity:1} }
+
+    /* ══ RESPONSIVE ════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      nav { display: none; flex-direction: column; position: absolute; top: 84px; left: 0; right: 0; background: var(--verde); padding: 1rem; z-index: 99; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+      nav.abierto { display: flex; }
+      nav a { text-align: center; padding: .75rem; border-radius: 10px; }
+      .quienes-grid, .humus-grid, .footer-grid { grid-template-columns: 1fr; }
+      .asociados-grid { grid-template-columns: 1fr; }
+      .calc-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 1: NAVEGACIÓN
+════════════════════════════════════════════ -->
+<header>
+  <a href="#inicio" class="logo-header">
+    <div class="logo-icon"><img src="imagenes/logo-cooprecoz.png" alt="Logo COOPRECOZ"></div>
+    <div class="logo-texto">
+      <strong>COOPRECOZ</strong>
+      <span>Cooperativa de Educandos · Glenn Doman</span>
+    </div>
+  </a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="nav-menu">
+    <a href="#inicio" class="activo">🏠 Inicio</a>
+    <a href="#quienes">👥 Nosotros</a>
+    <a href="#servicios">🤝 Servicios</a>
+    <a href="#galeria">📷 Galería</a>
+    <a href="#humus">🌿 Humus</a>
+    <a href="#asociados">🎒 Asociados</a>
+    <a href="#calculadora" style="background:var(--amarillo);color:var(--marron)">🧮 Calculadora</a>
+    <a href="#estructura">🏛️ Organización</a>
+  </nav>
+</header>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 2: HERO
+════════════════════════════════════════════ -->
+<section id="inicio">
+  <div class="hojas-deco">
+    <div class="hoja">🍃</div><div class="hoja">🌿</div>
+    <div class="hoja">🦋</div><div class="hoja">🌱</div><div class="hoja">🍀</div>
+  </div>
+  <div class="hero-contenido">
+    <span class="badge-hero">✨ Cooperativa Escolar</span>
+    <h1 class="hero-titulo">Bienvenidos a<br><em>COOPRECOZ</em></h1>
+    <p class="hero-subtitulo">La cooperativa de educandos de la <strong>Escuela Glenn Doman Precoz</strong>. Aprendemos a emprender, a cooperar y a cuidar nuestra Pachamama.</p>
+    <div>
+      <a href="#asociados" class="btn-cta">🎒 Quiero ser asociado</a>
+      <a href="#servicios" class="btn-cta sec">Ver servicios</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 3: QUIÉNES SOMOS
+════════════════════════════════════════════ -->
+<section id="quienes">
+  <h2 class="seccion-titulo">¿Quiénes Somos?</h2>
+  <div class="seccion-linea"></div>
+  <div class="quienes-grid">
+    <div class="quienes-texto">
+      <img src="imagenes/quienes-somos.jpg" alt="Educandos de COOPRECOZ en el Potrerito del Saber" style="width:100%;border-radius:16px;margin-bottom:1.4rem;box-shadow:var(--sombra)">
+      <p><strong>COOPRECOZ</strong> es la cooperativa escolar de los educandos de la <strong>Escuela Glenn Doman Precoz — Potrerito del Saber</strong>, ubicada en la vereda Río Frío, Floridablanca (Santander). Es reconocida como la <strong>única cooperativa estudiantil del país</strong>.</p>
+      <p>Creemos que <strong>aprender a cooperar es aprender a vivir</strong>. Cada educando vinculado a COOPRECOZ aprende que el trabajo en equipo y el cuidado del medio ambiente construyen un mundo mejor.</p>
+      <p>Nuestra primera gran iniciativa es la <strong>producción y venta de humus orgánico</strong>, elaborado con lombriz roja californiana en el Potrerito del Saber.</p>
+    </div>
+    <ul class="valores-lista">
+      <li><span>🤝</span><div><strong>Cooperación</strong><br><span style="font-weight:400">Todos aportamos, todos ganamos.</span></div></li>
+      <li><span>🌱</span><div><strong>Amor por la Natura</strong><br><span style="font-weight:400">Cuidamos el planeta desde la escuela.</span></div></li>
+      <li><span>🧠</span><div><strong>Aprendizaje activo</strong><br><span style="font-weight:400">Emprender es la mejor aula.</span></div></li>
+      <li><span>💛</span><div><strong>Comunidad Glenn Doman</strong><br><span style="font-weight:400">Somos familia.</span></div></li>
+      <li><span>♻️</span><div><strong>Responsabilidad ambiental</strong><br><span style="font-weight:400">Lo que sembramos, cosechamos.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 4: SERVICIOS
+════════════════════════════════════════════ -->
+<section id="servicios">
+  <h2 class="seccion-titulo">Nuestros Servicios</h2>
+  <div class="seccion-linea"></div>
+  <div class="servicios-grid">
+    <div class="tarjeta dest">
+      <div class="badge-nuevo">⭐ Producto estrella</div>
+      <div class="ico">🌍</div>
+      <h3>Humus Orgánico</h3>
+      <p>Abono 100% natural producido por los educandos. Ideal para huertas, jardines y cultivos. Mejora el suelo de forma sostenible.</p>
+    </div>
+    <div class="tarjeta">
+      <div class="ico">🎒</div>
+      <h3>Tienda del Asociado</h3>
+      <p>Productos y útiles escolares a precios especiales. Un espacio para aprender el valor del ahorro y el consumo responsable.</p>
+    </div>
+    <div class="tarjeta">
+      <div class="ico">💰</div>
+      <h3>Ahorro Cooperativo</h3>
+      <p>Aprende a ahorrar desde pequeño. Los educandos depositan en COOPRECOZ y ven crecer sus ahorros.</p>
+    </div>
+    <div class="tarjeta">
+      <div class="ico">📚</div>
+      <h3>Formación en Emprendimiento</h3>
+      <p>Talleres prácticos donde los educandos aprenden economía, cooperativismo y sostenibilidad ambiental.</p>
+    </div>
+    <div class="tarjeta">
+      <div class="ico">🌿</div>
+      <h3>Huerta Escolar</h3>
+      <p>Participación en la huerta del Potrerito del Saber. Ciclo de la tierra, compostaje y producción de alimentos sanos.</p>
+    </div>
+    <div class="tarjeta">
+      <div class="ico">🤝</div>
+      <h3>Redes de Apoyo</h3>
+      <p>Conectamos familias, educandos y la comunidad Glenn Doman en proyectos que fortalecen el tejido social.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 4B: GALERÍA
+  Reemplaza cada imagenes/galeria-X.jpg por tus fotos reales,
+  guardándolas con el MISMO nombre — así no hay que tocar el HTML.
+════════════════════════════════════════════ -->
+<section id="galeria" style="background:var(--blanco)">
+  <h2 class="seccion-titulo">Galería</h2>
+  <div class="seccion-linea"></div>
+  <div class="servicios-grid">
+    <img src="imagenes/galeria-1.jpg" alt="Educandos de COOPRECOZ" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--sombra)">
+    <img src="imagenes/galeria-2.jpg" alt="Producción de humus orgánico" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--sombra)">
+    <img src="imagenes/galeria-3.jpg" alt="Jornada ecológica COOPRECOZ" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--sombra)">
+    <img src="imagenes/galeria-4.jpg" alt="Asamblea de asociados COOPRECOZ" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--sombra)">
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 5: HUMUS ORGÁNICO
+════════════════════════════════════════════ -->
+<section id="humus">
+  <h2 class="seccion-titulo">Humus Orgánico COOPRECOZ</h2>
+  <div class="seccion-linea"></div>
+  <div class="humus-grid">
+    <div class="humus-info">
+      <h3>🌱 Fabricado por nuestros educandos</h3>
+      <p>El humus de <strong>lombriz roja californiana</strong> que producimos en el Potrerito del Saber es resultado del trabajo de nuestros educandos, quienes aprenden biología y medio ambiente de forma práctica.</p>
+      <p>Es el fertilizante natural más completo: mejora la estructura del suelo, activa la vida microbiana y nutre las plantas de forma orgánica.</p>
+      <p>En nuestras <strong>jornadas ecológicas</strong> (4 al año) también vendemos granizada y cerezada preparadas por los mismos educandos.</p>
+      <ul class="bene-lista">
+        <li>✅ 100% natural y orgánico</li>
+        <li>✅ Sin químicos ni pesticidas</li>
+        <li>✅ Producido en la Escuela Glenn Doman</li>
+        <li>✅ Apoya el aprendizaje de los educandos</li>
+        <li>✅ Apto para huertas, jardines y macetas</li>
+      </ul>
+    </div>
+    <div class="precio-card">
+      <img src="imagenes/humus-producto.jpg" alt="Bolsa de humus orgánico COOPRECOZ" style="width:100%;border-radius:14px;margin-bottom:.8rem">
+      <h3>Humus Orgánico</h3>
+      <p style="font-size:.85rem;opacity:.65;margin-bottom:.4rem">Bolsa de 1 kg · Premium</p>
+      <div class="precio-num">$5.000</div>
+      <p class="precio-nota">COP · precio asociado</p>
+      <a href="https://wa.me/573142946713?text=Hola%2C%20quiero%20pedir%20humus%20org%C3%A1nico%20COOPRECOZ" target="_blank" class="btn-pedir">📲 Hacer mi pedido</a>
+      <div class="stock-badge"><span class="dot-verde"></span> Disponible · Producción continua</div>
+      <p style="font-size:.75rem;margin-top:.9rem;opacity:.6">📞 314 2946713</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 6: ★ ASOCIADOS — PANEL COMPLETO ★
+  Contiene dos sub-secciones con pestañas:
+    A) Cómo unirse
+    B) Buscador conectado a Google Sheets
+════════════════════════════════════════════ -->
+<section id="asociados">
+  <h2 class="seccion-titulo">Asociados COOPRECOZ</h2>
+  <div class="seccion-linea"></div>
+
+  <!-- Pestañas internas -->
+  <div class="asoc-tabs">
+    <button class="asoc-tab on" onclick="cambiarTab('unirse', this)">🎒 Cómo unirse</button>
+    <button class="asoc-tab"   onclick="cambiarTab('buscar', this)">🔍 Buscar asociado</button>
+  </div>
+
+  <!-- ── TAB A: Cómo unirse ── -->
+  <div id="tab-unirse">
+    <div class="pasos-grid">
+      <div class="paso">
+        <div class="paso-num">1</div>
+        <h3>Solicitud de ingreso</h3>
+        <p>El educando o su familia solicita la vinculación a través de la secretaría o del comité de COOPRECOZ.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-num">2</div>
+        <h3>Aporte inicial</h3>
+        <p>Se realiza un pequeño aporte de ingreso que queda registrado como tu parte del capital cooperativo.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-num">3</div>
+        <h3>Carné digital</h3>
+        <p>Recibes tu código de asociado que te identifica y da acceso a todos los beneficios de COOPRECOZ.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-num">4</div>
+        <h3>¡Participa!</h3>
+        <p>Accede a servicios, asiste a las asambleas, vota en las decisiones y ayuda a crecer la cooperativa.</p>
+      </div>
+    </div>
+    <div class="bene-asoc">
+      <div class="ba"><span class="bi">🎁</span><div><strong>Descuentos</strong> en productos COOPRECOZ y tienda del asociado.</div></div>
+      <div class="ba"><span class="bi">🗳️</span><div><strong>Voto y voz</strong> en todas las decisiones de la cooperativa.</div></div>
+      <div class="ba"><span class="bi">💸</span><div><strong>Excedentes</strong> repartidos al cierre del año escolar.</div></div>
+      <div class="ba"><span class="bi">📚</span><div><strong>Formación</strong> en emprendimiento y cooperativismo.</div></div>
+      <div class="ba"><span class="bi">🌿</span><div><strong>Humus orgánico</strong> a precio de asociado.</div></div>
+      <div class="ba"><span class="bi">🤝</span><div><strong>Red de apoyo</strong> de toda la comunidad Glenn Doman.</div></div>
+    </div>
+  </div>
+
+  <!-- ── TAB B: Buscador de asociados ── -->
+  <div id="tab-buscar" style="display:none">
+
+    <!-- ➊ Caja de instrucciones para conectar Google Sheets -->
+    <div class="config-box" id="config-box">
+      <h4>⚙️ Conectar tu Excel de asociados</h4>
+      <p><strong>Paso 0 — muy importante:</strong> nunca publiques tu Excel maestro (el que tiene saldos, direcciones o teléfonos). Crea primero una <strong>hoja pública aparte</strong> con solo 4 columnas.</p>
+      <ol>
+        <li>Sube tu archivo <strong>.xlsx</strong> a Google Drive → ábrelo (se convierte en Google Sheets automáticamente).</li>
+        <li>Crea una <strong>hoja nueva</strong> dentro del mismo archivo (pestaña <em>+</em> abajo) llamada, por ejemplo, "Vista pública".</li>
+        <li>En esa hoja nueva, copia <strong>solo</strong> estas 4 columnas de tu Excel: <code>Nombre</code>, <code>Grado</code>, <code>Activo</code> (Sí/No), <code>Al día</code> (Sí/No). Nada de teléfonos, direcciones ni saldos.</li>
+        <li>Con la pestaña "Vista pública" abierta, ve a <strong>Archivo → Publicar en la web</strong> → selecciona esa hoja y formato <em>CSV</em> → clic en <strong>Publicar</strong>.</li>
+        <li>Copia el enlace que aparece y pégalo abajo.</li>
+      </ol>
+      <p style="margin-top:.5rem;font-size:.82rem;opacity:.7">El enlace se parece a: <code>https://docs.google.com/spreadsheets/d/XXXX/pub?gid=0&output=csv</code></p>
+      <div class="config-input">
+        <input type="text" id="sheets-url" placeholder="Pega aquí el enlace CSV de tu hoja pública..." />
+        <button class="btn-conectar" onclick="conectarSheets()">Conectar 🔗</button>
+      </div>
+      <div id="config-msg" style="margin-top:.6rem;font-size:.82rem;font-weight:700;display:none"></div>
+    </div>
+
+    <!-- ➋ Buscador en tiempo real -->
+    <div class="buscador-wrap">
+      <span class="buscador-ico">🔍</span>
+      <input type="text" id="input-buscar" placeholder="Buscar asociado por nombre, grado o código..." oninput="filtrarAsociados(this.value)" />
+      <button class="buscador-clear" id="btn-clear" onclick="limpiarBusqueda()">✕</button>
+    </div>
+
+    <!-- ➌ Barra de estadísticas -->
+    <div class="stats-bar">
+      <div class="stat-chip"><span class="dot dot-verde2"></span> Total: <strong id="stat-total">0</strong> asociados</div>
+      <div class="stat-chip"><span class="dot dot-gris"></span> Mostrando: <strong id="stat-mostrando">0</strong></div>
+      <div class="stat-chip" id="stat-estado" style="color:var(--tierra)">Sin datos conectados</div>
+    </div>
+
+    <!-- ➍ Grid de tarjetas -->
+    <div class="asociados-grid" id="grid-asociados">
+      <div class="estado-msg" style="grid-column:1/-1">
+        <div class="ico-grande">📋</div>
+        <p>Conecta tu Google Sheet arriba para ver los asociados.<br>O carga datos de prueba para ver cómo funciona.</p>
+        <button onclick="cargarDatosPrueba()" style="margin-top:1rem;background:var(--verde);color:#fff;border:none;padding:.7rem 1.5rem;border-radius:20px;font-weight:700;cursor:pointer;font-size:.9rem;font-family:'Nunito',sans-serif;">🧪 Cargar datos de prueba</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 7: CALCULADORA DE VENTAS
+════════════════════════════════════════════ -->
+<section id="calculadora">
+  <h2 class="seccion-titulo">🧮 Calculadora de Ventas</h2>
+  <div class="seccion-linea"></div>
+  <p style="text-align:center;max-width:580px;margin:0 auto 2.5rem;font-size:.95rem;opacity:.72;line-height:1.6;">
+    Herramienta para los educandos que atienden las ventas de COOPRECOZ.<br>
+    Calcula precios, vueltos y lleva el registro del día. 💚
+  </p>
+
+  <div class="calc-layout">
+
+    <!-- ╔══════════════════════════╗ -->
+    <!-- ║   CALCULADORA BÁSICA    ║ -->
+    <!-- ╚══════════════════════════╝ -->
+    <div>
+      <div class="calc-card">
+        <div class="calc-card-header" style="background:linear-gradient(135deg,#1a2e1a,#2d5a1b)">
+          <span class="ch-ico">🔢</span>
+          <div>
+            <h3 style="color:#a8e67a">Calculadora básica</h3>
+            <p style="color:rgba(255,255,255,.6)">Suma, resta, multiplica y divide</p>
+          </div>
+        </div>
+        <div class="calc-card-body">
+
+          <!-- Pantalla -->
+          <div class="calc-pantalla">
+            <div class="expresion" id="calc-expr"></div>
+            <div class="resultado" id="calc-res">0</div>
+          </div>
+
+          <!-- Botones -->
+          <div class="calc-botones">
+            <!-- Fila 1 -->
+            <button class="cb clear"   onclick="calcClear()">C</button>
+            <button class="cb borrar"  onclick="calcBorrar()">⌫</button>
+            <button class="cb op"      onclick="calcOp('%')">%</button>
+            <button class="cb op"      onclick="calcOp('÷')">÷</button>
+            <!-- Fila 2 -->
+            <button class="cb num"     onclick="calcNum('7')">7</button>
+            <button class="cb num"     onclick="calcNum('8')">8</button>
+            <button class="cb num"     onclick="calcNum('9')">9</button>
+            <button class="cb op"      onclick="calcOp('×')">×</button>
+            <!-- Fila 3 -->
+            <button class="cb num"     onclick="calcNum('4')">4</button>
+            <button class="cb num"     onclick="calcNum('5')">5</button>
+            <button class="cb num"     onclick="calcNum('6')">6</button>
+            <button class="cb op"      onclick="calcOp('−')">−</button>
+            <!-- Fila 4 -->
+            <button class="cb num"     onclick="calcNum('1')">1</button>
+            <button class="cb num"     onclick="calcNum('2')">2</button>
+            <button class="cb num"     onclick="calcNum('3')">3</button>
+            <button class="cb op"      onclick="calcOp('+')">+</button>
+            <!-- Fila 5 -->
+            <button class="cb num span2" onclick="calcNum('0')">0</button>
+            <button class="cb num"       onclick="calcNum('.')">.</button>
+            <button class="cb igual"     onclick="calcIgual()">=</button>
+          </div>
+
+          <!-- Botón pasar a vueltos -->
+          <button onclick="pasarAVueltos()" style="width:100%;margin-top:.9rem;padding:.7rem;background:var(--gris);border:2px dashed var(--verde-claro);border-radius:12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;color:var(--verde);cursor:pointer;transition:background .2s">
+            ➡️ Usar este resultado en vueltos
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ╔══════════════════════════╗ -->
+    <!-- ║    CALCULADORA VUELTOS  ║ -->
+    <!-- ╚══════════════════════════╝ -->
+    <div style="display:flex;flex-direction:column;gap:1.5rem">
+
+      <div class="vueltos-card">
+        <div class="vueltos-header">
+          <span class="vh-ico">💵</span>
+          <div>
+            <h3>Calculadora de vueltos</h3>
+            <p>¿Cuánto devuelvo? Lo calculo aquí</p>
+          </div>
+        </div>
+        <div class="vueltos-body">
+
+          <!-- Productos rápidos -->
+          <div class="productos-rapidos">
+            <p>⚡ Productos rápidos</p>
+            <div class="prod-chips">
+              <button class="prod-chip" onclick="selProducto(8500,'🌍 Humus 1 lb')">🌍 Humus 1 lb<br><small>$8.500</small></button>
+              <button class="prod-chip" onclick="selProducto(4500,'🌍 Humus ½ lb')">🌍 Humus ½ lb<br><small>$4.500</small></button>
+              <button class="prod-chip" onclick="selProducto(3500,'🍋 Limonada')">🍋 Limonada<br><small>$3.500</small></button>
+              <button class="prod-chip" onclick="selProducto(2000,'🍋 Lim. pequeña')">🍋 Lim. pequeña<br><small>$2.000</small></button>
+              <button class="prod-chip" onclick="selProducto(5000,'🍋 Lim. especial')">🍋 Lim. especial<br><small>$5.000</small></button>
+            </div>
+          </div>
+
+          <!-- Campos -->
+          <div class="campo-grupo">
+            <label>💰 Precio del producto</label>
+            <div class="campo-input-wrap">
+              <span class="campo-prefix">$</span>
+              <input class="campo-input" type="number" id="v-precio" placeholder="ej: 3500" min="0" oninput="limpiarError(this)"/>
+            </div>
+          </div>
+          <div class="campo-grupo">
+            <label>🤲 El cliente paga con</label>
+            <div class="campo-input-wrap">
+              <span class="campo-prefix">$</span>
+              <input class="campo-input" type="number" id="v-pago" placeholder="ej: 5000" min="0" oninput="limpiarError(this)"/>
+            </div>
+            <!-- Billetes/monedas comunes -->
+            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem">
+              <button onclick="setPago(1000)"  class="prod-chip">$1.000</button>
+              <button onclick="setPago(2000)"  class="prod-chip">$2.000</button>
+              <button onclick="setPago(5000)"  class="prod-chip">$5.000</button>
+              <button onclick="setPago(10000)" class="prod-chip">$10.000</button>
+              <button onclick="setPago(20000)" class="prod-chip">$20.000</button>
+              <button onclick="setPago(50000)" class="prod-chip">$50.000</button>
+            </div>
+          </div>
+
+          <button class="btn-calcular-vueltos" onclick="calcularVueltos()">
+            Calcular vueltos 🔄
+          </button>
+
+          <!-- Resultado vueltos -->
+          <div class="vueltos-resultado" id="vueltos-res"></div>
+
+        </div>
+      </div>
+
+      <!-- Totales del día -->
+      <div class="calc-card">
+        <div class="calc-card-header" style="background:var(--gris)">
+          <span class="ch-ico">📊</span>
+          <div>
+            <h3>Resumen del día</h3>
+            <p>Ventas registradas en esta sesión</p>
+          </div>
+        </div>
+        <div class="calc-card-body" style="padding-top:.8rem">
+          <div class="totales-dia">
+            <div class="td-item">
+              <div class="td-val" id="td-ventas">0</div>
+              <div class="td-label">Ventas</div>
+            </div>
+            <div class="td-item">
+              <div class="td-val" id="td-total">$0</div>
+              <div class="td-label">Total recaudado</div>
+            </div>
+            <div class="td-item">
+              <div class="td-val" id="td-vueltos">$0</div>
+              <div class="td-label">Total vueltos</div>
+            </div>
+          </div>
+
+          <!-- Historial -->
+          <div class="historial-seccion">
+            <div class="historial-titulo">
+              <span>📋 Historial de ventas</span>
+              <button class="btn-limpiar-hist" onclick="limpiarHistorial()">🗑️ Limpiar</button>
+            </div>
+            <div class="historial-lista" id="hist-lista">
+              <div class="hist-vacio">Aún no hay ventas registradas. ¡Empieza a vender! 🌱</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- fin columna derecha -->
+  </div><!-- fin calc-layout -->
+</section>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 8: ESTRUCTURA ORGANIZACIONAL
+════════════════════════════════════════════ -->
+<section id="estructura">
+  <h2 class="seccion-titulo">Estructura Organizacional</h2>
+  <div class="seccion-linea"></div>
+  <p style="text-align:center;max-width:560px;margin:0 auto 2.5rem;opacity:.72;font-size:.93rem;">COOPRECOZ es dirigida por los propios educandos, apoyados por los maestros. Aprendemos democracia y liderazgo en la práctica.</p>
+  <div class="org-chart">
+    <!-- Asamblea -->
+    <div class="org-nivel">
+      <div class="org-tarjeta" style="border-top-color:#9b59b6;min-width:240px;">
+        <div class="cargo-ico">🏫</div>
+        <h3 style="color:#7d3c98;">Asamblea de Asociados</h3>
+        <p>Máxima autoridad. Todos los educandos asociados participan y votan.</p>
+      </div>
+    </div>
+    <div class="org-linea-v"></div>
+    <!-- Presidente -->
+    <div class="org-nivel">
+      <div class="org-tarjeta pres">
+        <div class="cargo-ico">👑</div>
+        <h3>Presidencia</h3>
+        <p>Educando elegido democráticamente. Representa a COOPRECOZ y lidera las decisiones.</p>
+      </div>
+    </div>
+    <div class="org-linea-v"></div>
+    <div class="linea-h-wrap"><div class="linea-h"></div></div>
+    <!-- Tesorería y Comunicaciones -->
+    <div class="nivel-hijos">
+      <div class="org-tarjeta tes">
+        <div class="cargo-ico">💰</div>
+        <h3 style="color:var(--tierra);">Tesorería</h3>
+        <p>Gestiona ingresos, egresos y el ahorro cooperativo. Rinde cuentas a la asamblea.</p>
+      </div>
+      <div class="org-tarjeta com">
+        <div class="cargo-ico">📢</div>
+        <h3>Comunicaciones</h3>
+        <p>Difunde actividades y promueve los productos de COOPRECOZ en la comunidad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  🍀 PARTE 8: FOOTER
+════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">
+        <div class="logo-icon"><img src="imagenes/logo-cooprecoz.png" alt="Logo COOPRECOZ"></div>
+        <strong>COOPRECOZ</strong>
+      </div>
+      <p>Cooperativa de Educandos de la Escuela Glenn Doman Precoz — Potrerito del Saber, vereda Río Frío, Floridablanca (Santander).</p>
+      <p style="margin-top:.8rem">📞 Pedidos de humus: 314 294 6713<br>🏫 Escuela: 314 299 9713<br>✉️ <a href="mailto:contacto@escuelaprecoz.edu.co" style="color:inherit">contacto@escuelaprecoz.edu.co</a></p>
+    </div>
+    <div>
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="#inicio">🏠 Inicio</a></li>
+        <li><a href="#quienes">👥 Quiénes Somos</a></li>
+        <li><a href="#servicios">🤝 Servicios</a></li>
+        <li><a href="#humus">🌿 Humus Orgánico</a></li>
+        <li><a href="#asociados">🎒 Asociados</a></li>
+        <li><a href="#estructura">🏛️ Organización</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>La Escuela</h4>
+      <ul>
+        <li><a href="https://escuelaprecoz.edu.co" target="_blank">🌐 Sitio oficial</a></li>
+        <li><a href="https://www.instagram.com/gdepotrerodelsaber/" target="_blank">📸 Instagram</a></li>
+        <li><a href="https://www.facebook.com/EscuelaPrecoz/" target="_blank">📘 Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 COOPRECOZ · Cooperativa de Educandos · Glenn Doman Escuela Precoz</p>
+    <p style="margin-top:.3rem">«Solo cuando seas tú mismo, podrás dar algo al mundo»</p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════
+  🍀 MODAL: Ficha del asociado
+════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal" onclick="cerrarModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <button class="modal-close" onclick="cerrarModalBtn()">✕</button>
+      <div class="modal-avatar-grande" id="m-avatar"></div>
+      <h3 id="m-nombre"></h3>
+      <p id="m-grado"></p>
+    </div>
+    <div class="modal-body">
+      <div class="modal-fila">
+        <span class="modal-fila-ico">🎫</span>
+        <div><div class="modal-fila-label">Código de asociado</div><div class="modal-fila-valor" id="m-codigo"></div></div>
+      </div>
+      <div class="modal-fila">
+        <span class="modal-fila-ico">📌</span>
+        <div><div class="modal-fila-label">Estado</div><div class="modal-fila-valor" id="m-activo"></div></div>
+      </div>
+      <div class="modal-fila">
+        <span class="modal-fila-ico">💚</span>
+        <div><div class="modal-fila-label">Aportes</div><div class="modal-fila-valor" id="m-aldia"></div></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal pri" style="flex:1" onclick="cerrarModalBtn()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+/* ── Navegación ── */
+const hamburger = document.getElementById('hamburger');
+const navMenu   = document.getElementById('nav-menu');
+hamburger.addEventListener('click', () => navMenu.classList.toggle('abierto'));
+navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navMenu.classList.remove('abierto')));
+const secciones = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let actual = '';
+  secciones.forEach(s => { if (window.scrollY >= s.offsetTop - 100) actual = s.id; });
+  links.forEach(l => l.classList.toggle('activo', l.getAttribute('href') === '#' + actual));
+});
+
+/* ── Sub-tabs de asociados ── */
+function cambiarTab(tab, btn) {
+  document.getElementById('tab-unirse').style.display = tab === 'unirse' ? 'block' : 'none';
+  document.getElementById('tab-buscar').style.display = tab === 'buscar' ? 'block' : 'none';
+  document.querySelectorAll('.asoc-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+/* ── Datos globales ── */
+let todosLosAsociados = [];
+
+/* ── DATOS DE PRUEBA (para demostración) ── */
+const datosPrueba = [
+  { codigo:'COOP-001', nombre:'Valentina García López',   grado:'Grado 4°', activo:true,  alDia:true  },
+  { codigo:'COOP-002', nombre:'Santiago Morales Ruiz',    grado:'Grado 5°', activo:true,  alDia:false },
+  { codigo:'COOP-003', nombre:'Isabella Torres Vega',     grado:'Grado 3°', activo:true,  alDia:true  },
+  { codigo:'COOP-004', nombre:'Sebastián Díaz Peña',      grado:'Grado 5°', activo:false, alDia:false },
+  { codigo:'COOP-005', nombre:'Mariana Castillo Núñez',   grado:'Grado 2°', activo:true,  alDia:true  },
+  { codigo:'COOP-006', nombre:'Juan David Herrera Ríos',  grado:'Grado 4°', activo:true,  alDia:true  },
+  { codigo:'COOP-007', nombre:'Sofía Ramírez Jiménez',    grado:'Grado 3°', activo:true,  alDia:false },
+  { codigo:'COOP-008', nombre:'Miguel Ángel Vargas Cruz', grado:'Grado 5°', activo:true,  alDia:true  },
+];
+
+function cargarDatosPrueba() {
+  todosLosAsociados = datosPrueba;
+  renderizarAsociados(todosLosAsociados);
+  document.getElementById('config-box').style.display = 'none';
+  actualizarStats(todosLosAsociados.length, todosLosAsociados.length, '🧪 Datos de prueba activos');
+}
+
+/* ── Conectar Google Sheets ── */
+function conectarSheets() {
+  const url = document.getElementById('sheets-url').value.trim();
+  const msg = document.getElementById('config-msg');
+  msg.style.display = 'block';
+  if (!url) { msg.style.color = 'var(--tierra)'; msg.textContent = '⚠️ Por favor pega el enlace CSV de tu hoja pública.'; return; }
+  if (!url.includes('docs.google.com')) { msg.style.color = 'var(--tierra)'; msg.textContent = '⚠️ El enlace no parece ser de Google Sheets. Revísalo.'; return; }
+  msg.style.color = 'var(--verde)'; msg.textContent = '⏳ Conectando con Google Sheets...';
+
+  // Usar proxy CORS para evitar bloqueos
+  const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+  fetch(proxyUrl)
+    .then(r => { if (!r.ok) throw new Error('Error de red'); return r.text(); })
+    .then(csv => {
+      const asociados = parsearCSV(csv);
+      if (asociados.length === 0) { throw new Error('Sin datos'); }
+      todosLosAsociados = asociados;
+      renderizarAsociados(asociados);
+      document.getElementById('config-box').style.display = 'none';
+      actualizarStats(asociados.length, asociados.length, '✅ Google Sheets conectado');
+      msg.style.color = 'var(--verde)'; msg.textContent = '✅ ¡Conexión exitosa! Se cargaron ' + asociados.length + ' asociados.';
+    })
+    .catch(err => {
+      msg.style.color = 'var(--tierra)';
+      msg.textContent = '❌ No se pudo conectar. Verifica que el Sheet esté publicado como CSV público. (' + err.message + ')';
+    });
+}
+
+/* ── Normaliza texto: minúsculas y sin tildes, para comparar sin errores ── */
+function normalizar(s) { return (s || '').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim(); }
+
+/* ── Interpreta una celda "Sí/No" (acepta Sí, Si, True, 1, Activo, X...) ── */
+function esAfirmativo(v) {
+  const n = normalizar(v);
+  return n === 'si' || n === 'true' || n === '1' || n === 'activo' || n === 'x';
+}
+
+/* ── Parsear CSV de la hoja pública ──
+   A PROPÓSITO solo extrae estas 4 columnas. Aunque tu hoja publicada
+   tuviera por error otras columnas (saldo, dirección, teléfono...),
+   esta función las ignora por completo: nunca llegan a mostrarse. ── */
+function parsearCSV(csv) {
+  const lineas = csv.trim().split('\n').filter(l => l.trim());
+  if (lineas.length < 2) return [];
+  const cabeceras = lineas[0].split(',').map(h => normalizar(h).replace(/['"]/g, ''));
+
+  const idx = (buscar) => cabeceras.findIndex(c => c.includes(buscar));
+  const iNombre = idx('nombre') >= 0 ? idx('nombre') : 0;
+  const iGrado  = idx('grado')  >= 0 ? idx('grado')  : idx('curso') >= 0 ? idx('curso') : 1;
+  const iCodigo = idx('codigo') >= 0 ? idx('codigo') : -1;
+  const iActivo = idx('activo') >= 0 ? idx('activo') : -1;
+  const iAlDia  = idx('al dia') >= 0 ? idx('al dia')  : idx('aporte') >= 0 ? idx('aporte') : -1;
+
+  return lineas.slice(1).map((linea, i) => {
+    const cols = linea.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
+    return {
+      codigo: iCodigo >= 0 && cols[iCodigo] ? cols[iCodigo] : 'COOP-' + String(i + 1).padStart(3, '0'),
+      nombre: cols[iNombre] || 'Sin nombre',
+      grado:  cols[iGrado]  || 'Sin grado',
+      activo: iActivo >= 0 ? esAfirmativo(cols[iActivo]) : true,
+      alDia:  iAlDia  >= 0 ? esAfirmativo(cols[iAlDia])  : null,
+    };
+  }).filter(a => a.nombre !== 'Sin nombre');
+}
+
+/* ── Chip visual para Activo / Al día ── */
+function chipEstado(valor, textoSi, textoNo) {
+  if (valor === true)  return `<span class="aso-badge aso-badge-ok">✅ ${textoSi}</span>`;
+  if (valor === false) return `<span class="aso-badge aso-badge-no">❌ ${textoNo}</span>`;
+  return `<span class="aso-badge">— Sin dato</span>`;
+}
+
+/* ── Renderizar tarjetas ── */
+function renderizarAsociados(lista) {
+  const grid = document.getElementById('grid-asociados');
+  if (lista.length === 0) {
+    grid.innerHTML = `<div class="estado-msg" style="grid-column:1/-1">
+      <div class="ico-grande">🔍</div>
+      <p>No se encontraron asociados con ese criterio de búsqueda.</p>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = lista.map(a => {
+    const ini = a.nombre.split(' ').slice(0,2).map(p => p[0]).join('').toUpperCase();
+    return `<div class="aso-card" onclick="abrirModal(${JSON.stringify(a).replace(/"/g,'&quot;')})">
+      <div class="aso-avatar">${ini}</div>
+      <div class="aso-info">
+        <h4>${a.nombre}</h4>
+        <p>${a.grado}</p>
+        <div style="display:flex;gap:.4rem;margin-top:.4rem;flex-wrap:wrap">
+          ${chipEstado(a.activo, 'Activo', 'Inactivo')}
+          ${chipEstado(a.alDia, 'Al día', 'En mora')}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── Buscador en tiempo real ── */
+function filtrarAsociados(q) {
+  const clear = document.getElementById('btn-clear');
+  clear.style.display = q ? 'block' : 'none';
+  const txt = q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const filtrados = todosLosAsociados.filter(a => {
+    const haystack = (a.nombre + ' ' + a.grado + ' ' + a.codigo).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    return haystack.includes(txt);
+  });
+  renderizarAsociados(filtrados);
+  actualizarStats(todosLosAsociados.length, filtrados.length,
+    filtrados.length === todosLosAsociados.length ? '✅ Google Sheets conectado' : '🔍 Filtrando resultados');
+}
+
+function limpiarBusqueda() {
+  document.getElementById('input-buscar').value = '';
+  document.getElementById('btn-clear').style.display = 'none';
+  renderizarAsociados(todosLosAsociados);
+  actualizarStats(todosLosAsociados.length, todosLosAsociados.length, '✅ Google Sheets conectado');
+}
+
+function actualizarStats(total, mostrando, estado) {
+  document.getElementById('stat-total').textContent     = total;
+  document.getElementById('stat-mostrando').textContent = mostrando;
+  document.getElementById('stat-estado').textContent    = estado;
+}
+
+/* ── Modal: Ficha del asociado ── */
+function abrirModal(dataStr) {
+  let a;
+  try { a = typeof dataStr === 'string' ? JSON.parse(dataStr.replace(/&quot;/g, '"')) : dataStr; } catch(e) { return; }
+  const ini = a.nombre.split(' ').slice(0,2).map(p => p[0]).join('').toUpperCase();
+  document.getElementById('m-avatar').textContent = ini;
+  document.getElementById('m-nombre').textContent  = a.nombre;
+  document.getElementById('m-grado').textContent   = a.grado;
+  document.getElementById('m-codigo').textContent  = a.codigo;
+  document.getElementById('m-activo').textContent  = a.activo === true ? '✅ Activo' : a.activo === false ? '❌ Inactivo' : '— Sin dato';
+  document.getElementById('m-aldia').textContent   = a.alDia === true ? '✅ Al día'  : a.alDia === false ? '❌ En mora'  : '— Sin dato';
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function cerrarModalBtn() {
+  document.getElementById('modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+function cerrarModal(e) {
+  if (e.target === document.getElementById('modal')) cerrarModalBtn();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarModalBtn(); });
+
+/* ════════════════════════════════════════
+   CALCULADORA BÁSICA
+════════════════════════════════════════ */
+let calcEstado = { expresion: '', pantalla: '0', esperandoOp: false, ultimoOp: null };
+function calcActualizar() {
+  document.getElementById('calc-res').textContent  = calcEstado.pantalla;
+  document.getElementById('calc-expr').textContent = calcEstado.expresion;
+}
+function calcNum(n) {
+  if (calcEstado.esperandoOp) {
+    calcEstado.pantalla = n === '.' ? '0.' : n;
+    calcEstado.esperandoOp = false;
+  } else {
+    if (n === '.' && calcEstado.pantalla.includes('.')) return;
+    calcEstado.pantalla = calcEstado.pantalla === '0' && n !== '.' ? n : calcEstado.pantalla + n;
+    if (calcEstado.pantalla.length > 12) return;
+  }
+  calcActualizar();
+}
+function calcOp(op) {
+  calcEstado.expresion = fmtPesos(parseFloat(calcEstado.pantalla)) + ' ' + op;
+  calcEstado.ultimoOp  = { val: parseFloat(calcEstado.pantalla), op };
+  calcEstado.esperandoOp = true;
+  calcActualizar();
+}
+function calcIgual() {
+  if (!calcEstado.ultimoOp) return;
+  const a = calcEstado.ultimoOp.val, b = parseFloat(calcEstado.pantalla), op = calcEstado.ultimoOp.op;
+  let r;
+  if (op==='+') r=a+b; else if(op==='−') r=a-b; else if(op==='×') r=a*b;
+  else if(op==='÷') r=b!==0?a/b:'Error'; else if(op==='%') r=a*(b/100);
+  calcEstado.expresion = fmtPesos(a)+' '+op+' '+fmtPesos(b)+' =';
+  calcEstado.pantalla  = r==='Error'?'Error':String(Math.round(r*100)/100);
+  calcEstado.ultimoOp  = null; calcEstado.esperandoOp = true;
+  calcActualizar();
+}
+function calcClear()  { calcEstado={expresion:'',pantalla:'0',esperandoOp:false,ultimoOp:null}; calcActualizar(); }
+function calcBorrar() { if(calcEstado.esperandoOp)return; calcEstado.pantalla=calcEstado.pantalla.length>1?calcEstado.pantalla.slice(0,-1):'0'; calcActualizar(); }
+function pasarAVueltos() {
+  const val = parseFloat(calcEstado.pantalla);
+  if (!isNaN(val) && val > 0) { document.getElementById('v-precio').value = val; document.getElementById('v-precio').focus(); }
+}
+
+/* ════════════════════════════════════════
+   CALCULADORA DE VUELTOS
+════════════════════════════════════════ */
+let historial=[], totalVentas=0, totalRecaudado=0, totalVueltosDia=0;
+const MONEDAS=[50000,20000,10000,5000,2000,1000,500,200,100,50];
+function fmtPesos(n){ return '$'+Math.abs(n).toLocaleString('es-CO'); }
+function selProducto(precio,nombre){
+  document.getElementById('v-precio').value=precio;
+  document.querySelectorAll('.prod-chip').forEach(c=>c.classList.remove('sel'));
+  event.currentTarget.classList.add('sel');
+  limpiarError(document.getElementById('v-precio'));
+  document.getElementById('vueltos-res').classList.remove('show');
+}
+function setPago(val){ document.getElementById('v-pago').value=val; limpiarError(document.getElementById('v-pago')); }
+function limpiarError(el){ el.classList.remove('error'); }
+function calcularVueltos(){
+  const pEl=document.getElementById('v-precio'), gEl=document.getElementById('v-pago');
+  const precio=parseFloat(pEl.value), pago=parseFloat(gEl.value);
+  const resEl=document.getElementById('vueltos-res');
+  let ok=true;
+  if(!precio||precio<=0){pEl.classList.add('error');ok=false;}
+  if(!pago||pago<=0){gEl.classList.add('error');ok=false;}
+  if(!ok)return;
+  const vuelto=Math.round(pago-precio);
+  resEl.className='vueltos-resultado show';
+  if(vuelto<0){
+    resEl.classList.add('vr-error');
+    resEl.innerHTML=`<div class="vr-top"><span class="vr-ico">😟</span><div><div class="vr-titulo">Falta dinero</div><div class="vr-monto rojo">${fmtPesos(Math.abs(vuelto))}</div></div></div><div class="vr-desglose"><div class="vr-fila"><span>Precio del producto</span><span>${fmtPesos(precio)}</span></div><div class="vr-fila"><span>El cliente pagó</span><span>${fmtPesos(pago)}</span></div><div class="vr-fila total"><span>Le falta pagar</span><span style="color:#c0392b">${fmtPesos(Math.abs(vuelto))}</span></div></div>`;
+    return;
+  }
+  if(vuelto===0){
+    resEl.classList.add('vr-exacto');
+    resEl.innerHTML=`<div class="vr-top"><span class="vr-ico">🎯</span><div><div class="vr-titulo">¡Pago exacto!</div><div class="vr-monto azul">Sin vueltos</div></div></div><div class="vr-desglose"><div class="vr-fila"><span>Precio</span><span>${fmtPesos(precio)}</span></div><div class="vr-fila"><span>Pagó</span><span>${fmtPesos(pago)}</span></div><div class="vr-fila total"><span>¡Exacto! No hay vueltos 🎉</span><span>—</span></div></div>`;
+  } else {
+    const desglose=descomponerVuelto(vuelto);
+    const chipHtml=desglose.map(({val,cant})=>`<div class="moneda-chip">💵 ${fmtPesos(val)} × ${cant}</div>`).join('');
+    resEl.classList.add('vr-ok');
+    resEl.innerHTML=`<div class="vr-top"><span class="vr-ico">✅</span><div><div class="vr-titulo">Vueltos a entregar</div><div class="vr-monto verde">${fmtPesos(vuelto)}</div></div></div><div class="vr-desglose"><div class="vr-fila"><span>Precio del producto</span><span>${fmtPesos(precio)}</span></div><div class="vr-fila"><span>El cliente pagó</span><span>${fmtPesos(pago)}</span></div><div class="vr-fila total"><span>🔄 Devolver</span><span style="color:var(--verde)">${fmtPesos(vuelto)}</span></div><div style="margin-top:.6rem;font-size:.78rem;opacity:.6;font-weight:700;text-transform:uppercase;letter-spacing:.8px">¿En qué billetes y monedas?</div><div class="monedas-wrap">${chipHtml}</div></div>`;
+  }
+  if(vuelto>=0) registrarVenta(precio,pago,vuelto);
+}
+function descomponerVuelto(vuelto){
+  let resto=vuelto; const result=[];
+  for(const m of MONEDAS){ const cant=Math.floor(resto/m); if(cant>0){result.push({val:m,cant});resto-=cant*m;} if(resto===0)break; }
+  return result;
+}
+function registrarVenta(precio,pago,vuelto){
+  const hora=new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  const nombreProd=document.querySelector('.prod-chip.sel')?.textContent.split('\n')[0].trim()||'Producto';
+  historial.unshift({precio,pago,vuelto,hora,nombre:nombreProd});
+  totalVentas++; totalRecaudado+=precio; totalVueltosDia+=vuelto;
+  document.getElementById('td-ventas').textContent=totalVentas;
+  document.getElementById('td-total').textContent=fmtPesos(totalRecaudado);
+  document.getElementById('td-vueltos').textContent=fmtPesos(totalVueltosDia);
+  document.getElementById('hist-lista').innerHTML=historial.map(h=>`<div class="hist-item"><div class="hi-izq"><div>${h.nombre}</div><div class="hi-vuelto">Vuelto: ${fmtPesos(h.vuelto)}</div></div><div class="hi-der"><div style="font-weight:800">${fmtPesos(h.precio)}</div><div class="hi-hora">${h.hora}</div></div></div>`).join('');
+}
+function limpiarHistorial(){
+  if(!confirm('¿Limpiar el historial del día?'))return;
+  historial=[];totalVentas=0;totalRecaudado=0;totalVueltosDia=0;
+  document.getElementById('td-ventas').textContent='0';
+  document.getElementById('td-total').textContent='$0';
+  document.getElementById('td-vueltos').textContent='$0';
+  document.getElementById('hist-lista').innerHTML='<div class="hist-vacio">Aún no hay ventas registradas. ¡Empieza a vender! 🌱</div>';
+  document.getElementById('vueltos-res').classList.remove('show');
+}
+</script>
+</body>
+</html>
